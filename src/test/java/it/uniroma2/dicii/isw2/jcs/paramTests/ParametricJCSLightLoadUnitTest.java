@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
  * Description of the Class
  *
  */
-public class JCSLightLoadUnitTest
+public class ParametricParametricJCSLightLoadUnitTest
     extends TestCase
 {
 
@@ -50,7 +50,7 @@ public class JCSLightLoadUnitTest
      * @param testName
      *            Description of the Parameter
      */
-    public JCSLightLoadUnitTest( String testName )
+    public ParametricJCSLightLoadUnitTest( String testName )
     {
         super( testName );
     }
@@ -63,7 +63,7 @@ public class JCSLightLoadUnitTest
      */
     public static void main( String args[] )
     {
-        String[] testCaseName = { JCSLightLoadUnitTest.class.getName() };
+        String[] testCaseName = { ParametricJCSLightLoadUnitTest.class.getName() };
         junit.textui.TestRunner.main( testCaseName );
     }
 
@@ -74,7 +74,7 @@ public class JCSLightLoadUnitTest
      */
     public static Test suite()
     {
-        return new TestSuite( JCSLightLoadUnitTest.class );
+        return new TestSuite( ParametricJCSLightLoadUnitTest.class );
     }
 
     /**

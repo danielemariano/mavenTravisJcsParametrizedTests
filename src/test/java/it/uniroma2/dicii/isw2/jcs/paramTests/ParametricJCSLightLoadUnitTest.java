@@ -1,4 +1,6 @@
-package org.apache.jcs;
+package it.uniroma2.dicii.isw2.jcs.paramTests;
+
+import org.apache.jcs.JCS;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -27,7 +29,7 @@ import junit.framework.TestSuite;
  * Description of the Class
  *
  */
-public class ParametricParametricJCSLightLoadUnitTest
+public class ParametricJCSLightLoadUnitTest
     extends TestCase
 {
 

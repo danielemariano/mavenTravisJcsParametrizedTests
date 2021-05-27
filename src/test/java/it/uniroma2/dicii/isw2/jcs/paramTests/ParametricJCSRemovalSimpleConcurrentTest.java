@@ -1,4 +1,6 @@
-package org.apache.jcs;
+package it.uniroma2.dicii.isw2.jcs.paramTests;
+
+import org.apache.jcs.JCS;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -24,7 +26,7 @@ import junit.framework.TestCase;
 /**
  * Verify that basic removal functionality works.
  */
-public class JCSRemovalSimpleConcurrentTest
+public class ParametricJCSRemovalSimpleConcurrentTest
     extends TestCase
 {
     /**
@@ -32,7 +34,7 @@ public class JCSRemovalSimpleConcurrentTest
      *
      * @param testName
      */
-    public JCSRemovalSimpleConcurrentTest( String testName )
+    public ParametricJCSRemovalSimpleConcurrentTest( String testName )
     {
         super( testName );
     }
@@ -54,7 +56,7 @@ public class JCSRemovalSimpleConcurrentTest
      */
     public static void main( String args[] )
     {
-        String[] testCaseName = { JCSRemovalSimpleConcurrentTest.class.getName() };
+        String[] testCaseName = { ParametricJCSRemovalSimpleConcurrentTest.class.getName() };
         junit.textui.TestRunner.main( testCaseName );
     }
 

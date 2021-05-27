@@ -1,6 +1,6 @@
-//package org.apache.jcs;
+package org.apache.jcs;
 
-package it.uniroma2.dicii.isw2.jcs.paramTests;
+//package it.uniroma2.dicii.isw2.jcs.paramTests;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -21,7 +21,7 @@ package it.uniroma2.dicii.isw2.jcs.paramTests;
  * under the License.
  */
 
-import org.apache.jcs.JCS;
+//import org.apache.jcs.JCS;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -1,8 +1,8 @@
-//package org.apache.jcs;
+package org.apache.jcs;
 
-package it.uniroma2.dicii.isw2.jcs.paramTests;
+//package it.uniroma2.dicii.isw2.jcs.paramTests;
 
-import org.apache.jcs.JCS;
+//import org.apache.jcs.JCS;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one

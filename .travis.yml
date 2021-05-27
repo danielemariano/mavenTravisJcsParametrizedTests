@@ -1,11 +1,14 @@
+#language: java
+#sudo: false
+#install: true
+#
+#script: "mvn test"
+#
+#notifications:
+#  slack:
+#    on_success: never
+#    on_failure: never
+
 language: java
 sudo: false
-install: true
-
-script: "mvn test"
-
-notifications:
-  slack:
-    on_success: never
-    on_failure: never
- 
+script: mvn clean verify

@@ -20,21 +20,22 @@ public class ParametricJCSLightLoadUnitTest extends TestCase {
 	private int items;
 	private JCS jcs;
     
-    // Test setup
+    // Test setup class
     @Before
     public void setUp() throws Exception {
     	configure();
-    }
-    
-    public ParametricJCSLightLoadUnitTest(int items, String expected) {
-    	this.items = items;
     }
 
     // Configuration test parameters
     private void configure() throws CacheException {
         JCS.setConfigFilename( "/TestSimpleLoad.ccf" );
-        jcs = JCS.getInstance( "testCache1" );		
-	}
+        jcs = JCS.getInstance( "testCache1" );
+    }
+    
+    // Constructor for the TestSimpleLoad object
+    public ParametricJCSLightLoadUnitTest(int items, String expected) {
+    	this.items = 999;
+    }
     
     // Init test items array
     @Parameters
@@ -45,8 +46,7 @@ public class ParametricJCSLightLoadUnitTest extends TestCase {
 
     // A unit test for JUnit
     @Test
-    public void testSimpleLoad() throws Exception {
-        
+    public void testSimpleLoad() throws Exception {        
         for ( int i = 1; i <= items; i++ ) {
             jcs.put( i + ":key", "data" + i );
         }
@@ -61,7 +61,6 @@ public class ParametricJCSLightLoadUnitTest extends TestCase {
         // Test removal
         jcs.remove( "300:key" );
         assertNull( jcs.get( "300:key" ) );
-
     }
 
 }

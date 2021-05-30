@@ -2,96 +2,70 @@ package it.uniroma2.dicii.isw2.jcs.paramTests;
 
 import org.apache.jcs.JCS;
 
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.apache.jcs.access.exception.CacheException;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import junit.framework.TestCase;
 
-/**
- * Verify that basic removal functionality works.
- */
-public class ParametricJCSRemovalSimpleConcurrentTest
-    extends TestCase
-{
-    /**
-     * Constructor for the TestDiskCache object.
-     *
-     * @param testName
-     */
-    public ParametricJCSRemovalSimpleConcurrentTest( String testName )
-    {
-        super( testName );
+// Verify that basic removal functionality works.
+@RunWith(Parameterized.class)
+public class ParametricJCSRemovalSimpleConcurrentTest extends TestCase {
+    
+	private JCS jcs;
+	private int count;
+    
+	// Test setup class
+    @Before
+	public void setUp() throws Exception {
+    	configure();
+    }
+    
+    // Configuration test parameters
+	private void configure() throws CacheException {
+		JCS.setConfigFilename( "/TestRemoval.ccf" );
+		jcs = JCS.getInstance( "testCache1" );		
+	}
+
+	// Constructor for the TestDiskCache object.
+    public ParametricJCSRemovalSimpleConcurrentTest(int count, String expected) {
+    	this.count = 500;
+    }
+    
+
+    // Init test parameters
+    @Parameters
+    public static Collection<Object[]> data() {
+    	Object[][] data = new Object[][]{ {500, null}, }; 
+        return Arrays.asList(data);
     }
 
-    /**
-     * Test setup
-     */
-    public void setUp()
-        throws Exception
-    {
-        JCS.setConfigFilename( "/TestRemoval.ccf" );
-        JCS.getInstance( "testCache1" );
-    }
+    // Verify that 2 level deep hierchical removal works.
+    @Test
+    public void testTwoDeepRemoval() throws Exception {
 
-    /**
-     * Main method passes this test to the text test runner.
-     *
-     * @param args
-     */
-    public static void main( String args[] )
-    {
-        String[] testCaseName = { ParametricJCSRemovalSimpleConcurrentTest.class.getName() };
-        junit.textui.TestRunner.main( testCaseName );
-    }
-
-    /**
-     * Verify that 2 level deep hierchical removal works.
-     *
-     * @throws Exception
-     */
-    public void testTwoDeepRemoval()
-        throws Exception
-    {
-
-        System.out.println( "------------------------------------------" );
+        System.out.println( "------------------------------------------ " );
         System.out.println( "testTwoDeepRemoval" );
 
-        int count = 500;
-        JCS jcs = JCS.getInstance( "testCache1" );
-
-        for ( int i = 0; i <= count; i++ )
-        {
+        for ( int i = 0; i <= count; i++ ) {
             jcs.put( "key:" + i + ":anotherpart", "data" + i );
         }
 
-        for ( int i = count; i >= 0; i-- )
-        {
+        for ( int i = count; i >= 0; i-- ) {
             String res = (String) jcs.get( "key:" + i + ":anotherpart" );
-            if ( res == null )
-            {
+            if ( res == null ) {
                 assertNotNull( "[key:" + i + ":anotherpart] should not be null, " + jcs.getStats(), res );
             }
         }
         System.out.println( "Confirmed that " + count + " items could be found" );
 
-        for ( int i = 0; i <= count; i++ )
-        {
+        for ( int i = 0; i <= count; i++ ) {
             jcs.remove( "key:" + i + ":" );
             assertNull( jcs.getStats(), jcs.get( "key:" + i + ":anotherpart" ) );
         }
@@ -101,38 +75,26 @@ public class ParametricJCSRemovalSimpleConcurrentTest
 
     }
 
-    /**
-     * Verify that 1 level deep hierchical removal works.
-     *
-     * @throws Exception
-     */
-    public void testSingleDepthRemoval()
-        throws Exception
-    {
+    // Verify that 1 level deep hierchical removal works.
+    @Test
+    public void testSingleDepthRemoval() throws Exception {
 
         System.out.println( "------------------------------------------" );
         System.out.println( "testSingleDepthRemoval" );
 
-        int count = 500;
-        JCS jcs = JCS.getInstance( "testCache1" );
-
-        for ( int i = 0; i <= count; i++ )
-        {
+        for ( int i = 0; i <= count; i++ ) {
             jcs.put( i + ":key", "data" + i );
         }
 
-        for ( int i = count; i >= 0; i-- )
-        {
+        for ( int i = count; i >= 0; i-- ) {
             String res = (String) jcs.get( i + ":key" );
-            if ( res == null )
-            {
+            if ( res == null ) {
                 assertNotNull( "[" + i + ":key] should not be null", res );
             }
         }
         System.out.println( "Confirmed that " + count + " items could be found" );
 
-        for ( int i = 0; i <= count; i++ )
-        {
+        for ( int i = 0; i <= count; i++ ) {
             jcs.remove( i + ":" );
             assertNull( jcs.get( i + ":key" ) );
         }
@@ -142,31 +104,20 @@ public class ParametricJCSRemovalSimpleConcurrentTest
 
     }
 
-    /**
-     * Verify that clear removes everyting as it should.
-     *
-     * @throws Exception
-     */
-    public void testClear()
-        throws Exception
-    {
+    // Verify that clear removes everyting as it should.
+    @Test
+    public void testClear() throws Exception {
 
         System.out.println( "------------------------------------------" );
         System.out.println( "testRemoveAll" );
 
-        int count = 500;
-        JCS jcs = JCS.getInstance( "testCache1" );
-
-        for ( int i = 0; i <= count; i++ )
-        {
+        for ( int i = 0; i <= count; i++ ) {
             jcs.put( i + ":key", "data" + i );
         }
 
-        for ( int i = count; i >= 0; i-- )
-        {
+        for ( int i = count; i >= 0; i-- ) {
             String res = (String) jcs.get( i + ":key" );
-            if ( res == null )
-            {
+            if ( res == null ) {
                 assertNotNull( "[" + i + ":key] should not be null", res );
             }
         }
@@ -176,11 +127,9 @@ public class ParametricJCSRemovalSimpleConcurrentTest
 
         jcs.clear();
 
-        for ( int i = count; i >= 0; i-- )
-        {
+        for ( int i = count; i >= 0; i-- ) {
             String res = (String) jcs.get( i + ":key" );
-            if ( res != null )
-            {
+            if ( res != null ) {
                 assertNull( "[" + i + ":key] should be null after remvoeall" + jcs.getStats(), res );
             }
         }
@@ -188,33 +137,22 @@ public class ParametricJCSRemovalSimpleConcurrentTest
 
     }
 
-    /**
-     * Verify that we can clear repeatedly without error.
-     *
-     * @throws Exception
-     */
-    public void testClearRepeatedlyWithoutError()
-        throws Exception
-    {
+    // Verify that we can clear repeatedly without error.
+    @Test
+    public void testClearRepeatedlyWithoutError() throws Exception {
 
         System.out.println( "------------------------------------------" );
         System.out.println( "testRemoveAll" );
 
-        int count = 500;
-        JCS jcs = JCS.getInstance( "testCache1" );
-
         jcs.clear();
 
-        for ( int i = 0; i <= count; i++ )
-        {
+        for ( int i = 0; i <= count; i++ ) {
             jcs.put( i + ":key", "data" + i );
         }
 
-        for ( int i = count; i >= 0; i-- )
-        {
+        for ( int i = count; i >= 0; i-- ) {
             String res = (String) jcs.get( i + ":key" );
-            if ( res == null )
-            {
+            if ( res == null ) {
                 assertNotNull( "[" + i + ":key] should not be null", res );
             }
         }
@@ -222,13 +160,11 @@ public class ParametricJCSRemovalSimpleConcurrentTest
 
         System.out.println( jcs.getStats() );
 
-        for ( int i = count; i >= 0; i-- )
-        {
+        for ( int i = count; i >= 0; i-- ) {
             jcs.put( i + ":key", "data" + i );
             jcs.clear();
             String res = (String) jcs.get( i + ":key" );
-            if ( res != null )
-            {
+            if ( res != null ) {
                 assertNull( "[" + i + ":key] should be null after remvoeall" + jcs.getStats(), res );
             }
         }

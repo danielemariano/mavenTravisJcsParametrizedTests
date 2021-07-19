@@ -30,6 +30,7 @@ public class ParametricJCSLightLoadUnitTest extends TestCase {
     private void configure() throws CacheException {
         JCS.setConfigFilename( "/TestSimpleLoad.ccf" );
         jcs = JCS.getInstance( "testCache1" );
+        data();
     }
     
     // Constructor for the TestSimpleLoad object

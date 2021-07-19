@@ -30,7 +30,8 @@ public class ParametricJCSRemovalSimpleConcurrentTest extends TestCase {
     // Configuration test parameters
 	private void configure() throws CacheException {
 		JCS.setConfigFilename( "/TestRemoval.ccf" );
-		jcs = JCS.getInstance( "testCache1" );		
+		jcs = JCS.getInstance( "testCache1" );
+		data();
 	}
 
 	// Constructor for the TestDiskCache object.
